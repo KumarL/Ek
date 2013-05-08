@@ -48,12 +48,14 @@ int main(int argc, char ** argv)
     }
   }
 
-  Codegen cg;
+  Codegen cg("out");
   for (auto& input : inputs) {
     cg.process(input);
   }
   
-  cg.write("out.cc");
+  if (!cg.write()) {
+    fprintf(stderr, "Error in writing file\n");
+  }
 
   return 0;
 }

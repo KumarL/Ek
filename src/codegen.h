@@ -5,27 +5,38 @@
 
 class Codegen {
   private:
-    std::string membersText;
-    std::string processMethodText;
-    std::string processMethodTextTailTests;
-    std::string processMethodTextTailTestsForErrors;
-
-    static const std::string headerText;
-    static const std::string typeText;
-    static const std::string classPreambleText;
-    static const std::string printUsageText;
-    static const std::string processMethodTrail;
     static const char switch_char;
+
+    // static header file content
+    static const std::string headerFileText;
+
+    // dynamic parts of source file
+    std::string sourceFileMembers;
+    std::string sourceFlagCheckProcess;
+    std::string sourceDefaultAssignProcess;
+    std::string sourceArgCheckProcess;
+
+    // static source file content
+    static const std::string sourceFileText;
+
+    // the only dynamic part of header file
+    std::string headerFileMembers;
 
     static std::string str_fmt(const char * fmt, ...);
 
+	  void process_header(const Input& i);
+	  void process_source(const Input& i);
+	
+	  std::string get_header() const;
+	  std::string get_source() const;
+
+	  std::string outFileName;
 
   public:
     Codegen();
-    void process(Input i);
-    bool write(const std::string& filename) const;
+	  Codegen(std::string /*fname*/);
 
-    void test(Input i);
-    std::string get_mem_test();
+    void process(const Input& i);
+    bool write() const;
 };
 #endif
