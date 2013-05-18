@@ -59,7 +59,7 @@ Inputs::Process(int argc, char ** argv) {
     return _E_NO_PARAM_VALUE;
   }
   
-  return static_cast<ErrorT>(0);
+  return _E_NO_ERROR;
 }
 
 int main() {

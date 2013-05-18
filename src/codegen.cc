@@ -108,17 +108,6 @@ Codegen::write() const {
     sourceDefaultAssignProcess.c_str(),
     sourceArgCheckProcess.c_str());
 
-#ifdef FALSE
-  fprintf(code_file, "%s", headerText.c_str());
-  fprintf(code_file, "%s", typeText.c_str());
-  fprintf(code_file, "%s", classPreambleText.c_str());
-  fprintf(code_file, "%s", membersText.c_str());
-  fprintf(code_file, "%s", processMethodText.c_str());
-  fprintf(code_file, "%s", processMethodTextTailTests.c_str());
-  fprintf(code_file, "%s", processMethodTextTailTestsForErrors.c_str());
-  fprintf(code_file, "%s", processMethodTrail.c_str());
-#endif
-
   return (0 == fclose(header_file)) && (0 == fclose(code_file));
 }
 
@@ -193,7 +182,7 @@ Inputs::Process(int argc, char ** argv) {\n\
   // arg checking\n\
   %s\n\
 \n\
-  return static_cast<ErrorT>(0);\n\
+  return _E_NO_ERROR;\n\
 }\n\
 ";
 
@@ -201,10 +190,10 @@ const std::string Codegen::headerFileText=
 "\n\
 #ifndef _INPUTS_HEADER_\n\
 #define _INPUTS_HEADER_\n\
-#include <cstring>\n\
 #include <string>\n\
 \n\
 typedef enum {\n\
+  _E_NO_ERROR = 0,\n\
   _E_ZERO_INPUT = -1,\n\
   _E_NO_PARAM_VALUE = -2\n\
 } ErrorT;\n\
