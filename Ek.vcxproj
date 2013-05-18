@@ -85,8 +85,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\cmdline.cc" />
     <ClCompile Include="src\codegen.cc" />
+    <ClCompile Include="src\ek.cc" />
     <ClCompile Include="src\input.cc" />
     <ClCompile Include="src\lex.cc" />
     <ClCompile Include="src\parser.cc" />
