@@ -33,28 +33,29 @@ Codegen::process_source(const Input& i) {
 
   if (i.is_flag()){
     if_body = str_fmt(
-"      %s = true;\n",
+"      %s = true;",
       i.get_name().c_str()
     );
   } else {
     if_body = str_fmt(
 "      if (++i == argc) {\n\
-         fprintf(stdout, \"There is no value specified to %s param.\\n\");\n\
-         return _E_NO_PARAM_VALUE;\n\
-       }\n\
-       %s = argv[i];\n",
+        fprintf(stdout, \"There is no value specified to %s param.\\n\");\n\
+        return _E_NO_PARAM_VALUE;\n\
+      }\n\
+      %s = argv[i];",
       i.get_name().c_str(),
       i.get_name().c_str()
     );
   }
   
   sourceFlagCheckProcess += str_fmt(
-"    %sif (0 == strcmp(arg, \"%c%s\")) {\n\
-       %s\n\
-       continue;\n\
-     }\n\
+"\
+%sif (0 == strcmp(arg, \"%c%s\")) {\n\
+%s\n\
+      continue;\n\
+    }\n\
 ",
-    is_first ? "" : "else ",
+    is_first ? "" : "    else ",
     switch_char,
     i.get_name().c_str(),
     if_body.c_str()
@@ -63,10 +64,10 @@ Codegen::process_source(const Input& i) {
   // 3. Third dynamic part of process method
   if (!i.is_flag() && i.is_name_optional()) {
     sourceDefaultAssignProcess += str_fmt(
-  "    %sif (%s.empty()) {\n\
-         %s = argv[1];\n\
-         continue;\n\
-       }\n",
+"    %sif (%s.empty()) {\n\
+       %s = argv[1];\n\
+       continue;\n\
+     }\n",
        is_first ? "" : "else ",
        i.get_name(),
        i.get_name()
@@ -77,9 +78,9 @@ Codegen::process_source(const Input& i) {
   if (!i.is_flag() && !i.is_value_optional()) {
     sourceArgCheckProcess += str_fmt(
 "  if(%s.empty()) {\n\
-     fprintf(stderr, \"Error: %s is a required input and should be specified.\");\n\
-     return _E_NO_PARAM_VALUE;\n\
-   }\n\n",
+    fprintf(stderr, \"Error: %s is a required input and should be specified.\");\n\
+    return _E_NO_PARAM_VALUE;\n\
+  }\n\n",
       i.get_name().c_str(),
       i.get_name().c_str()
       );
@@ -180,8 +181,7 @@ Inputs::Process(int argc, char ** argv) {\n\
   }\n\
 \n\
   // arg checking\n\
-  %s\n\
-\n\
+%s\n\
   return _E_NO_ERROR;\n\
 }\n\
 ";
