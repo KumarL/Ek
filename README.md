@@ -34,5 +34,5 @@ Examples
 
 1. `shutdown [-m] [-k] [-comp] <computer name> -timer <number in seconds>`
 
-This shows a usage string with four parameters. Two are flags, `-m`, and `-k`. Two others are parameters. Please note that value of timer always needs to be specified by `-Timer`, but passing a string would be assumed to be `computer name` without always requiring its specifier `-comp`.
+	This shows a usage string with four parameters. Two are flags, `-m`, and `-k`. Two others are parameters. Please note that value of timer always needs to be specified by `-Timer`, but passing a string would be assumed to be `computer name` without always requiring its specifier `-comp`.
 
