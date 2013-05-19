@@ -5,7 +5,7 @@
 Lexer::Lexer(const std::string& _usage) : 
   param_name_optional(false),
   param_value_optional(false),
-  curr_usage_pos(9),
+  curr_usage_pos(0),
   usage_str(_usage) {
 }
 
