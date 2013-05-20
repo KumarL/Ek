@@ -3,15 +3,21 @@
 #include <stdio.h>
 #include <list>
 #include "input.h"
+#include "params.h"
 #include "lex.h"
 #include "parser.h"
 #include "codegen.h"
 
 int main(int argc, char ** argv)
 {
-  // usage string: ./ek -str <usage string> -namespace <name space> -out <filename without extension>
+  // usage string: ./ek -str <usage string> -outnamespace <name space> -out <filename without extension>
+  
+  ErrorT err;
+  if (_E_NO_ERROR != (err = Inputs::Process(argc, argv))) {
+    return err;
+  }
 
-  const std::string usage_str = "ek [-str] <usage string> [-namespace <name space>] -out <filename without extension>";
+  const std::string usage_str = Inputs::str;
 
   Lexer lexer(usage_str);
 
@@ -53,7 +59,7 @@ int main(int argc, char ** argv)
     }
   }
 
-  Codegen cg("out");
+  Codegen cg(Inputs::out);
   for (auto& input : inputs) {
     cg.process(input);
   }

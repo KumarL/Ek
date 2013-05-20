@@ -3,11 +3,11 @@
 #include <cstdarg>
 
 Codegen::Codegen() {
+  Codegen("out");
 }
 
 Codegen::Codegen(std::string fname)
 	: outFileName(fname) {
-  Codegen();
 }
 
 void
@@ -24,7 +24,7 @@ Codegen::process_source(const Input& i) {
 
   // 1. First dynamic part of the source file
   sourceFileMembers += str_fmt(
-"%s Inputs::%s;\n",
+"%s Params::%s;\n",
     i.is_flag() ? "bool" : "std::string",
     i.get_name().c_str());
 
@@ -77,7 +77,7 @@ Codegen::process_source(const Input& i) {
   if (!i.is_flag() && !i.is_value_optional()) {
     sourceArgCheckProcess += str_fmt(
 "  if(%s.empty()) {\n\
-    fprintf(stderr, \"Error: %s is a required input and should be specified.\");\n\
+    fprintf(stderr, \"Error: %s is a required input and should be specified.\\n\");\n\
     return _E_NO_PARAM_VALUE;\n\
   }\n\n",
       i.get_name().c_str(),
@@ -103,6 +103,7 @@ Codegen::write() const {
   fprintf(
     code_file,
     sourceFileText.c_str(),
+    outFileName.c_str(),
     sourceFileMembers.c_str(),
     sourceFlagCheckProcess.c_str(),
     sourceDefaultAssignProcess.c_str(),
@@ -162,13 +163,13 @@ Codegen::get_source() const {
 // 4. the checking code of Process method
 const std::string Codegen::sourceFileText =
 "\
-#include \"out.h\"\n\
+#include \"%s.h\"\n\
 #include <cstring>\n\
 \n\
 %s\n\
 \n\
 ErrorT\n\
-Inputs::Process(int argc, char ** argv) {\n\
+Params::Process(int argc, char ** argv) {\n\
   if (argc <= 0)\n\
     return _E_ZERO_INPUT;\n\
 \n\
@@ -187,8 +188,8 @@ Inputs::Process(int argc, char ** argv) {\n\
 
 const std::string Codegen::headerFileText= 
 "\n\
-#ifndef _INPUTS_HEADER_\n\
-#define _INPUTS_HEADER_\n\
+#ifndef _PARAMS_HEADER_\n\
+#define _PARAMS_HEADER_\n\
 #include <string>\n\
 \n\
 typedef enum {\n\
@@ -197,7 +198,7 @@ typedef enum {\n\
   _E_NO_PARAM_VALUE = -2\n\
 } ErrorT;\n\
 \n\
-class Inputs {\n\
+class Params {\n\
   public:\n\
 %s\
     static ErrorT Process(int argc, char ** argv);\n\

@@ -79,6 +79,7 @@
     <ClInclude Include="src\codegen.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\lex.h" />
+    <ClInclude Include="src\params.h" />
     <ClInclude Include="src\parser.h" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +90,7 @@
     <ClCompile Include="src\ek.cc" />
     <ClCompile Include="src\input.cc" />
     <ClCompile Include="src\lex.cc" />
+    <ClCompile Include="src\params.cc" />
     <ClCompile Include="src\parser.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
