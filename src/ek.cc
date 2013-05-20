@@ -59,7 +59,7 @@ int main(int argc, char ** argv)
     }
   }
 
-  Codegen cg(Inputs::out);
+  Codegen cg(Inputs::out, Inputs::outnamespace);
   for (auto& input : inputs) {
     cg.process(input);
   }

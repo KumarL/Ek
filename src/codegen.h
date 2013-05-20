@@ -23,7 +23,9 @@ class Codegen {
     std::string headerFileMembers;
 
     static std::string str_fmt(const char * fmt, ...);
+    static void        createNamespaceText(std::string ns, std::string& beg, std::string& end);
 
+    void process_namespace();
 	  void process_header(const Input& i);
 	  void process_source(const Input& i);
 	
@@ -31,10 +33,13 @@ class Codegen {
 	  std::string get_source() const;
 
 	  std::string outFileName;
+    std::string namespaceText_begin;
+    std::string namespaceText_end;
 
   public:
     Codegen();
 	  Codegen(std::string /*fname*/);
+    Codegen(std::string /*fname*/, std::string /*name_space*/);
 
     void process(const Input& i);
     bool write() const;

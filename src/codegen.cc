@@ -3,11 +3,18 @@
 #include <cstdarg>
 
 Codegen::Codegen() {
-  Codegen("out");
+  Codegen("out", "");
 }
 
-Codegen::Codegen(std::string fname)
-	: outFileName(fname) {
+Codegen::Codegen(std::string fname) {
+  Codegen(fname, "");
+}
+
+Codegen::Codegen(std::string fname, std::string ns)
+  : outFileName(fname) {
+   if (!ns.empty()) {
+     createNamespaceText(ns, namespaceText_begin, namespaceText_end);
+   }
 }
 
 void
@@ -89,31 +96,43 @@ Codegen::process_source(const Input& i) {
     is_first = false;
  }
 
+void
+Codegen::process_namespace() { 
+
+}
+
 bool
 Codegen::write() const {
   FILE * header_file = fopen(get_header().c_str(), "w");
+
   fprintf(
       header_file, 
       headerFileText.c_str(), 
-      headerFileMembers.c_str());
+      namespaceText_begin.c_str(),
+      headerFileMembers.c_str(),
+      namespaceText_end.c_str());
       
   FILE * code_file = fopen(
     get_source().c_str(), 
     "w");
+
   fprintf(
     code_file,
     sourceFileText.c_str(),
     outFileName.c_str(),
+    namespaceText_begin.c_str(),
     sourceFileMembers.c_str(),
     sourceFlagCheckProcess.c_str(),
     sourceDefaultAssignProcess.c_str(),
-    sourceArgCheckProcess.c_str());
+    sourceArgCheckProcess.c_str(),
+    namespaceText_end.c_str());
 
   return (0 == fclose(header_file)) && (0 == fclose(code_file));
 }
 
 void
 Codegen::process(const Input& i) {
+  process_namespace();
   process_header(i);
   process_source(i);
 }
@@ -145,6 +164,15 @@ Codegen::str_fmt(const char * fmt, ...) {
   return s;
 }
 
+void
+Codegen::createNamespaceText(std::string ns, std::string& beg, std::string& end) {
+  beg = str_fmt(
+    "namespace %s {\n",
+    ns.c_str());
+
+  end = "}\n";
+}
+
 std::string
 Codegen::get_header() const {
 	return outFileName + ".h";
@@ -166,6 +194,7 @@ const std::string Codegen::sourceFileText =
 #include \"%s.h\"\n\
 #include <cstring>\n\
 \n\
+%s\
 %s\n\
 \n\
 ErrorT\n\
@@ -184,6 +213,7 @@ Params::Process(int argc, char ** argv) {\n\
 %s\n\
   return _E_NO_ERROR;\n\
 }\n\
+%s\
 ";
 
 const std::string Codegen::headerFileText= 
@@ -192,6 +222,7 @@ const std::string Codegen::headerFileText=
 #define _PARAMS_HEADER_\n\
 #include <string>\n\
 \n\
+%s\
 typedef enum {\n\
   _E_NO_ERROR = 0,\n\
   _E_ZERO_INPUT = -1,\n\
@@ -203,6 +234,7 @@ class Params {\n\
 %s\
     static ErrorT Process(int argc, char ** argv);\n\
 };\n\
+%s\
 #endif\n\
 ";
 
