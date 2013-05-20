@@ -42,4 +42,4 @@ Examples
 
 2. `ek [-str] <usage string> [-outnamespace <name space>] -out <filename without extension>`
 
-	This is the usage string of Ek. Every parameter is required here, except outnamespace. We use the generated code in the Ek project itself.
+	This is the usage string of Ek. Every parameter is required here, except `outnamespace`. We use the generated code in the Ek project itself.
