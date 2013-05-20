@@ -9,7 +9,9 @@
 
 int main(int argc, char ** argv)
 {
-  const std::string usage_str = "shutdown [-m] [-k] [-comp] <computer name> -timer <number in seconds>";
+  // usage string: ./ek -str <usage string> -namespace <name space> -out <filename without extension>
+
+  const std::string usage_str = "ek [-str] <usage string> [-namespace <name space>] -out <filename without extension>";
 
   Lexer lexer(usage_str);
 
@@ -20,8 +22,11 @@ int main(int argc, char ** argv)
     switch (curr_tok) {
       case tok_identifier:
         {
-          inputs.push_back(Parser::HandleIdentifier(
-                lexer.get_identifier()));
+          // We primarily care only about a parameter or
+          // a flag. An identifier is likely the name of
+          // the program. We can reserve its use for future
+          // purpose, but we don't need it now.
+          continue;
         }
         break;
       case tok_param:

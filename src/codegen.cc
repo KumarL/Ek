@@ -22,7 +22,7 @@ void
 Codegen::process_source(const Input& i) {
   static bool is_first = true;
 
-  // 1. First dynamic part of process method
+  // 1. First dynamic part of the source file
   sourceFileMembers += str_fmt(
 "%s Inputs::%s;\n",
     i.is_flag() ? "bool" : "std::string",
@@ -64,13 +64,12 @@ Codegen::process_source(const Input& i) {
   // 3. Third dynamic part of process method
   if (!i.is_flag() && i.is_name_optional()) {
     sourceDefaultAssignProcess += str_fmt(
-"    %sif (%s.empty()) {\n\
-       %s = argv[1];\n\
+"else if (%s.empty()) {\n\
+       %s = argv[i];\n\
        continue;\n\
      }\n",
-       is_first ? "" : "else ",
-       i.get_name(),
-       i.get_name()
+       i.get_name().c_str(),
+       i.get_name().c_str()
        );
   }
 
@@ -176,7 +175,7 @@ Inputs::Process(int argc, char ** argv) {\n\
   for (int i = 1; i < argc; ++i) {\n\
     char * arg = argv[i];\n\
 \n\
-    %s\n\
+    %s\
     %s\n\
   }\n\
 \n\

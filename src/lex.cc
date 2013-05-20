@@ -78,7 +78,8 @@ Lexer::get_token() {
   }
 
   // check for param, or switch
-  bool param_name_or_value_optional = false;
+  bool param_name_or_value_optional = false;  
+  param_name_optional = param_value_optional = false;
 
   if ('[' == last_char) {
     get_char(last_char);
@@ -144,8 +145,6 @@ Lexer::get_token() {
     param_value = identifier_str;
 
     Token ret_tok = tok_param;
-
-    param_name_optional = param_value_optional = false;
 
     return ret_tok;
   }
