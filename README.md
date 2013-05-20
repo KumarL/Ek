@@ -24,6 +24,10 @@ A parameter can be specified in any of the following ways:
 
 	`ParamName` is optional here, but the parameter value is not. Therefore, the command line can pass this value without specifying `-ParamName`.
 
+3. `[[-ParamName] <param value help text>]`
+	
+	This parameter is optional, and if specified, does not need `-ParamName` always. In this case, both the parameter and the name specifier are optional.
+
 3. `-ParamName <param value help text>`
 
 	There are no optional parts to this parameter. This parameter value should be specified by the user always, and with the `-ParamName` specifier.
@@ -36,3 +40,6 @@ Examples
 
 	This shows a usage string with four parameters. Two are flags, `-m`, and `-k`. Two others are parameters. Please note that value of timer always needs to be specified by `-Timer`, but passing a string would be assumed to be `computer name` without always requiring its specifier `-comp`.
 
+2. `ek [-str] <usage string> [-outnamespace <name space>] -out <filename without extension>`
+
+	This is the usage string of Ek. Every parameter is required here, except outnamespace. We use the generated code in the Ek project itself.
