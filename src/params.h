@@ -1,6 +1,6 @@
 
-#ifndef _INPUTS_HEADER_
-#define _INPUTS_HEADER_
+#ifndef _PARAMS_HEADER_
+#define _PARAMS_HEADER_
 #include <string>
 
 typedef enum {
@@ -9,7 +9,7 @@ typedef enum {
   _E_NO_PARAM_VALUE = -2
 } ErrorT;
 
-class Inputs {
+class Params {
   public:
     static std::string str;
     static std::string outnamespace;

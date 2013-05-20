@@ -1,13 +1,13 @@
 #include "params.h"
 #include <cstring>
 
-std::string Inputs::str;
-std::string Inputs::outnamespace;
-std::string Inputs::out;
+std::string Params::str;
+std::string Params::outnamespace;
+std::string Params::out;
 
 
 ErrorT
-Inputs::Process(int argc, char ** argv) {
+Params::Process(int argc, char ** argv) {
   if (argc <= 0)
     return _E_ZERO_INPUT;
 

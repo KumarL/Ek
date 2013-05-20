@@ -13,11 +13,11 @@ int main(int argc, char ** argv)
   // usage string: ./ek -str <usage string> -outnamespace <name space> -out <filename without extension>
   
   ErrorT err;
-  if (_E_NO_ERROR != (err = Inputs::Process(argc, argv))) {
+  if (_E_NO_ERROR != (err = Params::Process(argc, argv))) {
     return err;
   }
 
-  const std::string usage_str = Inputs::str;
+  const std::string usage_str = Params::str;
 
   Lexer lexer(usage_str);
 
@@ -59,7 +59,7 @@ int main(int argc, char ** argv)
     }
   }
 
-  Codegen cg(Inputs::out, Inputs::outnamespace);
+  Codegen cg(Params::out, Params::outnamespace);
   for (auto& input : inputs) {
     cg.process(input);
   }
