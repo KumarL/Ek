@@ -17,9 +17,7 @@ int main(int argc, char ** argv)
     return err;
   }
 
-  const std::string usage_str = Params::str;
-
-  Lexer lexer(usage_str);
+  Lexer lexer(Params::str);
 
   std::list<Input> inputs;
 
