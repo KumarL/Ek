@@ -6,6 +6,7 @@ Lexer::Lexer(const std::string& _usage) :
   param_name_optional(false),
   param_value_optional(false),
   curr_usage_pos(0),
+  last_char(' '),
   usage_str(_usage) {
 }
 
@@ -53,8 +54,6 @@ Lexer::get_char(char& val) {
 //gettok -- Return the next token from the input string
 Token 
 Lexer::get_token() {
-  static char last_char = ' ';
-
   while (
       isspace(last_char) &&
       get_char(last_char) >= 0
@@ -96,7 +95,7 @@ Lexer::get_token() {
     param_name = "";
     while (
         get_char(last_char) >= 0 &&
-        isalpha(last_char)
+        isalnum(last_char) || '_' == last_char
         )
     {
       param_name += last_char;
@@ -108,8 +107,6 @@ Lexer::get_token() {
       // Resolve the ambiguity now
       param_name_optional = ']' == last_char;
       param_value_optional = !param_name_optional;
-    } else {
-      param_name_optional = param_value_optional = false;
     }
 
     while (
@@ -131,7 +128,7 @@ Lexer::get_token() {
     }
 
     if ('>' != last_char) {
-      fprintf(stderr, "Unterminated value paranthesis: >");
+      fprintf(stderr, "Unterminated value tag: >");
     } else {
       get_char(last_char); // move the read position one char forward
     }
@@ -139,7 +136,7 @@ Lexer::get_token() {
     if (param_value_optional &&
         get_char(last_char) &&
         ']' != last_char) {
-      fprintf(stderr, "Unterminated paranthesis: >");
+      fprintf(stderr, "Unterminated value paranthesis: ]");
     }
 
     param_value = identifier_str;

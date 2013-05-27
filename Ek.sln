@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ek", "Ek.vcxproj", "{A3393529-02D6-4DD2-A626-515401444612}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EkTest", "EkTest\EkTest.vcxproj", "{8DAF6081-8814-4875-AFDB-924980A29383}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{A3393529-02D6-4DD2-A626-515401444612}.Debug|Win32.Build.0 = Debug|Win32
 		{A3393529-02D6-4DD2-A626-515401444612}.Release|Win32.ActiveCfg = Release|Win32
 		{A3393529-02D6-4DD2-A626-515401444612}.Release|Win32.Build.0 = Release|Win32
+		{8DAF6081-8814-4875-AFDB-924980A29383}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8DAF6081-8814-4875-AFDB-924980A29383}.Debug|Win32.Build.0 = Debug|Win32
+		{8DAF6081-8814-4875-AFDB-924980A29383}.Release|Win32.ActiveCfg = Release|Win32
+		{8DAF6081-8814-4875-AFDB-924980A29383}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

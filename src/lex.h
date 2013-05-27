@@ -16,6 +16,7 @@ class Lexer {
   private:
     bool         param_name_optional;
     bool         param_value_optional;
+    char         last_char;
     size_t       curr_usage_pos;
     Token        curr_tok;
     std::string  param_name;
