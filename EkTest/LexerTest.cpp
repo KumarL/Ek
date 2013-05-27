@@ -92,7 +92,7 @@ int test_lexer(const char * usage, const InputsT& inputs) {
     // inputs_iter and found_inputs_iter points to the first item that did not match
     fprintf(
       stderr, 
-      "FAILED: test_lexer while validatings inputs. Expected: %s. Found: %s\n",
+      "FAILED: test_lexer while validating inputs. Expected: %s. Found: %s\n",
       inputs_iter->get_name().c_str(),
       found_inputs_iter->get_name().c_str());
     return -1;
@@ -115,11 +115,13 @@ int RunTests() {
     )
   );
 
-  fprintf(stdout, "Starting Test 1...\n");
+  fprintf(stdout, "Starting Test 1...");
 
   int ret_code;
   if (0 > (ret_code = test_lexer(usage_str1, expected_inputs1))) {
     return ret_code;
+  } else {
+    fprintf(stdout, "PASSED!\n");
   }
 
   // Test 2
@@ -153,10 +155,65 @@ int RunTests() {
     Parser::HandleFlag(
     "second_flag"));
 
-  fprintf(stdout, "Starting Test 2...\n");
+  fprintf(stdout, "Starting Test 2...");
 
   if (0 > (ret_code = test_lexer(usage_str2, expected_inputs2))) {
     return ret_code;
+  } else {
+    fprintf(stdout, "PASSED!\n");
+  }
+
+  // Test 3
+  // Throw in all together, and mix params and flags sequence
+
+  const char * usage_str3 = "foo.exe [-flag1] -first_param <first param value> [-flag2] [-second_param\
+    <second param value>] [-flag3] [-third_param] <third param value>";
+
+  InputsT expected_inputs3;
+  
+  expected_inputs3.push_back(
+    Parser::HandleFlag(
+    "flag1")
+  );
+
+  expected_inputs3.push_back(
+    Parser::HandleParam(
+    "first_param",
+    "first param value",
+    false,
+    false)
+    );
+
+  expected_inputs3.push_back(
+    Parser::HandleFlag(
+    "flag2"));
+
+  expected_inputs3.push_back(
+    Parser::HandleParam(
+    "second_param",
+    "second param value",
+    false,
+    true
+    ));
+
+  expected_inputs3.push_back(
+    Parser::HandleFlag(
+    "flag3"));
+
+  expected_inputs3.push_back(
+    Parser::HandleParam(
+    "third_param",
+    "third param value",
+    true,
+    false)
+    );
+
+  fprintf(stdout, "Starting Test 3...");
+
+  if (0 > (ret_code = test_lexer(usage_str3, expected_inputs3))) {
+    return ret_code;
+  } else {
+    fprintf(stdout, "PASSED!\n");
   }
 
   return 0;
